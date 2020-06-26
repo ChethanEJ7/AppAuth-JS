@@ -1,3 +1,4 @@
+
 "use strict";
 /*
  * Copyright 2017 Google Inc.
@@ -26,6 +27,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+let newWindow;
 var events_1 = require("events");
 var Http = require("http");
 var Url = require("url");
@@ -97,6 +99,8 @@ var NodeBasedHandler = /** @class */ (function (_super) {
             };
             emitter.emit(ServerEventsEmitter.ON_AUTHORIZATION_RESPONSE, completeResponse);
             response.end('Close your browser to continue');
+            newWindow.close();
+
         };
         this.authorizationPromise = new Promise(function (resolve, reject) {
             emitter.once(ServerEventsEmitter.ON_UNABLE_TO_START, function () {
@@ -114,10 +118,15 @@ var NodeBasedHandler = /** @class */ (function (_super) {
         request.setupCodeVerifier()
             .then(function () {
             server = Http.createServer(requestHandler);
-            server.listen(_this.httpServerPort);
+            server.listen(_this.httpServerPort,  '127.0.0.1');
             var url = _this.buildRequestUrl(configuration, request);
             logger_1.log('Making a request to ', request, url);
-            opener(url);
+            console.log("URLLLL");
+            console.log(url);
+            // opener(url);
+            newWindow =  open(url);
+            
+            
         })
             .catch(function (error) {
             logger_1.log('Something bad happened ', error);
