@@ -121,9 +121,6 @@ var NodeBasedHandler = /** @class */ (function (_super) {
             server.listen(_this.httpServerPort,  '127.0.0.1');
             var url = _this.buildRequestUrl(configuration, request);
             logger_1.log('Making a request to ', request, url);
-            console.log("URLLLL");
-            console.log(url);
-            // opener(url);
             newWindow =  open(url);
             
             
